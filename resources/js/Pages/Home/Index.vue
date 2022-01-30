@@ -72,6 +72,7 @@
             <template v-if="orders.length">
                 <div class="flex justify-end">
                     <button
+                        @click="isModalOpen = true"
                         type="button"
                         class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
@@ -157,7 +158,39 @@
         </StackedList>
     </div>
 
-
+    <Modal :is-modal-open="isModalOpen" @close-modal="test">
+        <template v-slot:default>
+            <p class="text-lg font-bold text-gray-800">
+                Este son tus platos adjuntados:
+            </p>
+            <ul role="list" class="divide-y divide-gray-200">
+                <li class="py-4 flex" v-for="order in orders" :key="order.id">
+                    <img
+                        class="h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                    />
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">
+                            Calvin Hawkins
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <p class="border-t border-gray-100 mt-2 pt-2">
+                Total:
+                {{ orders.reduce((acc, order) => acc + order.price, 0) }}
+            </p>
+        </template>
+        <template v-slot:footer>
+            <button
+                type="button"
+                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+                Realizar Pedido
+            </button>
+        </template>
+    </Modal>
 </template>
 
 <style scoped></style>
@@ -173,6 +206,11 @@ const props = defineProps({
 });
 
 let orders = reactive([]);
+let isModalOpen = ref(true);
+
+function test() {
+    isModalOpen.value = !isModalOpen;
+}
 
 function calculatePrice({ price, quantity }) {
     return (price * quantity).toFixed(2);
