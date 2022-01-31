@@ -9,7 +9,9 @@
         </h2>
     </div>
 
+
     <div class="px-6 mx-auto max-w-6xl">
+        <FlashMessage />
         <ul class="mb-6 space-y-2">
             <li
                 v-for="order in orders"
@@ -74,9 +76,9 @@
                     <button
                         @click="isModalOpen = true"
                         type="button"
-                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Confirmar Orden
+                        Ver Pedido
                         <svg
                             class="w-6 h-6 ml-2"
                             fill="none"
@@ -88,7 +90,7 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                             ></path>
                         </svg>
                     </button>
@@ -158,36 +160,91 @@
         </StackedList>
     </div>
 
-    <Modal :is-modal-open="isModalOpen" @close-modal="test">
+    <Modal :is-modal-open="isModalOpen" @close-modal="closeModal">
         <template v-slot:default>
             <p class="text-lg font-bold text-gray-800">
                 Este son tus platos adjuntados:
             </p>
             <ul role="list" class="divide-y divide-gray-200">
                 <li class="py-4 flex" v-for="order in orders" :key="order.id">
-                    <img
-                        class="h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                    />
                     <div class="ml-3">
                         <p class="text-sm font-medium text-gray-900">
-                            Calvin Hawkins
+                            {{ order.name }}
                         </p>
                     </div>
                 </li>
             </ul>
-            <p class="border-t border-gray-100 mt-2 pt-2">
-                Total:
-                {{ orders.reduce((acc, order) => acc + order.price, 0) }}
+            <p class="border-t border-gray-100 pt-2 flex justify-end">
+                Total: $ {{ totalOfOrders() }}
             </p>
+
+            <div class="bg-gray-50 p-4">
+                <div class="mb-4">
+                    <label
+                        for="client_name"
+                        class="block text-sm font-medium text-gray-700"
+                        >Nombre</label
+                    >
+                    <div class="mt-1">
+                        <input
+                            v-model="form.client_name"
+                            type="text"
+                            name="client_name"
+                            id="client_name"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Nombre"
+                        />
+                    </div>
+                    <p
+                        class="text-red-600"
+                        v-if="$page.props.errors.client_name"
+                    >
+                        {{ $page.props.errors.client_name }}
+                    </p>
+                </div>
+                <div>
+                    <label
+                        for="table_number"
+                        class="block text-sm font-medium text-gray-700"
+                        >Número de mesa</label
+                    >
+                    <select
+                        v-model="form.table_number"
+                        id="table_number"
+                        name="table_number"
+                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    >
+                        <option
+                            v-for="tableNumber in [1, 2, 3, 4, 5]"
+                            :value="tableNumber"
+                        >
+                            {{ tableNumber }}
+                        </option>
+                    </select>
+                </div>
+            </div>
         </template>
         <template v-slot:footer>
             <button
+                @click="makeOrder"
                 type="button"
-                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="w-full justify-center inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-                Realizar Pedido
+                Confirmar Pedido
+                <svg
+                    class="w-6 h-6 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                </svg>
             </button>
         </template>
     </Modal>
@@ -196,19 +253,21 @@
 <style scoped></style>
 
 <script setup>
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
 import Modal from "@/Pages/Shared/Modal";
 import StackedList from "@/Pages/Shared/StackedList";
 import { computed, reactive, ref } from "vue";
+import FlashMessage from "@/Pages/Shared/FlashMessage";
+import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     plates: Object,
 });
 
 let orders = reactive([]);
-let isModalOpen = ref(true);
+let isModalOpen = ref(false);
 
-function test() {
+function closeModal() {
     isModalOpen.value = !isModalOpen;
 }
 
@@ -218,6 +277,12 @@ function calculatePrice({ price, quantity }) {
 
 function isOrdered(plate) {
     return orders.some((order) => order.id === plate.id);
+}
+
+function totalOfOrders() {
+    return orders.reduce((total, order) => {
+        return total + parseInt(order.price);
+    }, 0);
 }
 
 function decrementOrder(order) {
@@ -245,6 +310,29 @@ function addOrder(plate) {
         description: plate.description,
         price: plate.price,
         quantity: 1,
+    });
+}
+
+let form = reactive({
+    client_name: null,
+    table_number: 1,
+});
+
+function makeOrder() {
+    Inertia.post(route("order.store"), {
+        client_name: form.client_name,
+        table_number: form.table_number,
+        ordersId: orders.map(function (order) {
+            return {
+                'orderId': order.id,
+                'quantity': order.quantity,
+            };
+        }),
+    }, {
+        onSuccess: () => {
+            orders.splice(0, orders.length);
+            closeModal();
+        },
     });
 }
 </script>
