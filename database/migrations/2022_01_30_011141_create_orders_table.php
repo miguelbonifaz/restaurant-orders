@@ -13,6 +13,8 @@ class CreateOrdersTable extends Migration
 
             $table->unsignedInteger('table_number');
             $table->string('client_name');
+            $table->string('status');
+            $table->date('completed_at')->nullable();
 
             $table->timestamps();
         });

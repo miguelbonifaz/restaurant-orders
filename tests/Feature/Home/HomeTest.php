@@ -28,6 +28,31 @@ test("can see plate list", function () {
                 ->where("id", $plate->id)
                 ->where("name", $plate->name)
                 ->where("description", $plate->description)
+                ->where("price", $plate->price)
+                ->where("quantity", $plate->quantity)
+        )
+    );
+});
+
+test(" can't see any plate if there is no availability", function () {
+    // Arrange
+    $plate = Menu::factory()->create(["name" => "Pizza"]);
+    Menu::factory()->create(['quantity' => 0]);
+
+    // Act
+    $response = plateList();
+
+    // Assert
+    $response->assertInertia(
+        fn(Assert $page) => $page->component("Home/Index")->has(
+            "plates.data",
+            1,
+            fn(Assert $page) => $page
+                ->where("id", $plate->id)
+                ->where("name", $plate->name)
+                ->where("description", $plate->description)
+                ->where("price", $plate->price)
+                ->where("quantity", $plate->quantity)
         )
     );
 });

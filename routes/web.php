@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FinalizeOrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
@@ -20,10 +21,11 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, '__invoke'])->name('home.index');
 
-Route::post('order', [OrderController::class, '__invoke'])->name('order.store');
+Route::prefix('orders')->group(function () {
+    Route::post('/', [OrderController::class, 'store'])->name('orders.store');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    Route::post('/{order}/finalize', [FinalizeOrderController::class, '__invoke'])->name('orders.finalize');
+});
+Route::get('/dashboard', [OrderController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

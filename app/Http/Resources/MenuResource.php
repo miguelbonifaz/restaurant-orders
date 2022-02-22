@@ -18,7 +18,11 @@ class MenuResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => number_format($this->price, 2)
+            'price' => number_format($this->price, 2),
+            'quantity' => $this->quantity,
+//            'quantity' => $this->whenPivotLoaded('menu_order', function () {
+//                return $this->pivot->quantity;
+//            })
         ];
     }
 }

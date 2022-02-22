@@ -14,6 +14,7 @@ class CreateMenuTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('price');
+            $table->bigInteger('quantity')->unsigned();
 
             $table->timestamps();
         });

@@ -30,6 +30,8 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
-        "@headlessui/vue": "^1.4.3"
+        "@headlessui/vue": "^1.4.3",
+        "laravel-echo": "^1.11.3",
+        "pusher-js": "^7.0.4"
     }
 }

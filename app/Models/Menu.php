@@ -21,6 +21,7 @@ class Menu extends Model implements HasMedia
         "name",
         "description",
         'price',
+        'quantity',
     ];
 
     public function registerMediaCollections(): void
@@ -49,5 +50,10 @@ class Menu extends Model implements HasMedia
         $query->when($search, function ($query) use ($search) {
             return $query->where("name", "like", "%{$search}%");
         });
+    }
+
+    public function scopeWithAvailableOrders(Builder $query)
+    {
+        $query->where("quantity", ">", 0);
     }
 }

@@ -12,9 +12,10 @@ class HomeController extends Controller
     {
         $plates = Menu::query()
             ->search(request('search'))
+            ->withAvailableOrders()
             ->with('media')
             ->latest()
-            ->get(['id', 'name', 'description', 'price']);
+            ->get(['id', 'name', 'description', 'price', 'quantity']);
 
         $filterSearch = request('search');
 

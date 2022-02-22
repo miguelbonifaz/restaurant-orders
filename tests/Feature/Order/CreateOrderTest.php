@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UpdateOrdersEvent;
 use App\Models\Menu;
 use App\Models\MenuOrder;
 use App\Models\Order;
@@ -7,12 +8,14 @@ use function Pest\Laravel\post;
 
 function createOrder($data = []): \Illuminate\Testing\TestResponse
 {
-    $uri = route('order.store');
+    $uri = route('orders.store');
 
     return post($uri, $data);
 }
 
 test('can create a order with several foods', function () {
+    \Illuminate\Support\Facades\Event::fake();
+
     // Arrange
     $plateOne = Menu::factory()->create();
     $plateTwo = Menu::factory()->create();
@@ -34,6 +37,8 @@ test('can create a order with several foods', function () {
     ]);
 
     // Assert
+    Event::assertDispatched(UpdateOrdersEvent::class);
+    
     $response->assertRedirect(route('home.index'));
     $response->assertSessionHas('message', 'Su pedido se realizó con éxito');
 
@@ -55,7 +60,7 @@ test('can create a order with several foods', function () {
     $this->assertEquals($tableNumber, $order->table_number);
 });
 
-test('field client name is required', function () {
+test('fields are required', function () {
     // Arrange
     $plateOne = Menu::factory()->create();
     $plateTwo = Menu::factory()->create();
@@ -77,7 +82,8 @@ test('field client name is required', function () {
     ]);
 
     // Assert
-    $response->assertSessionHasErrors('client_name');
-
-    $response->assertSessionDoesntHaveErrors('table_number');
+    $response->assertSessionHasErrors([
+        'client_name',
+        'table_number',
+    ]);
 });

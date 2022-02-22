@@ -9,7 +9,6 @@
         </h2>
     </div>
 
-
     <div class="px-6 mx-auto max-w-6xl">
         <FlashMessage />
         <ul class="mb-6 space-y-2">
@@ -20,7 +19,7 @@
                     'animate__animated animate__fadeInUp': order.quantity > 0,
                     'animate__animated animate__fadeOut': order.quantity === 0,
                 }"
-                class="flex items-center justify-between px-4 py-3 bg-white rounded-lg shadow-lg"
+                class="flex justify-between items-center px-4 py-3 bg-white rounded-lg shadow-lg"
             >
                 <span class="text-gray-700" v-text="order.name"></span>
                 <div class="flex items-center space-x-2">
@@ -51,9 +50,13 @@
                         class="text-lg font-bold text-gray-600"
                     ></span>
                     <button
-                        @click="order.quantity++"
+                        @click="incrementOrder(order)"
                         type="button"
-                        class="inline-flex items-center p-1 text-white bg-indigo-600 rounded-full border border-transparent shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="inline-flex items-center p-1 rounded-full border border-transparent shadow-sm focus:outline-none"
+                        :class="{
+                            'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' : canIOrderMoreOrders(order),
+                            'bg-gray-300 text-white cursor-default' : !canIOrderMoreOrders(order),
+                        }"
                     >
                         <svg
                             class="w-5 h-5"
@@ -76,11 +79,11 @@
                     <button
                         @click="isModalOpen = true"
                         type="button"
-                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="inline-flex items-center px-4 py-2 font-medium text-white bg-indigo-600 rounded-lg border border-transparent shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Ver Pedido
                         <svg
-                            class="w-6 h-6 ml-2"
+                            class="ml-2 w-6 h-6"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -108,16 +111,32 @@
                             >
                             </span>
                             <div class="w-full">
-                                <p
-                                    class="font-medium text-indigo-600 flex justify-between mb-2"
-                                >
-                                    {{ plate.name }}
-                                    <span
-                                        class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-bold bg-gray-100 text-gray-800"
-                                    >
-                                        ${{ plate.price }}
-                                    </span>
-                                </p>
+                                <div class="flex justify-between items-center">
+                                    <p class="mb-2 font-medium text-indigo-600">
+                                        {{ plate.name }}
+                                    </p>
+                                    <div>
+                                        <span
+                                            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-bold bg-gray-100 text-gray-800"
+                                        >
+                                            ${{ plate.price }}
+                                        </span>
+                                        <span
+                                            class="inline-flex ml-1 items-center px-3 py-0.5 rounded-full text-sm font-bold bg-gray-100 text-gray-800"
+                                        >
+                                            <template
+                                                v-if="plate.quantity === 1"
+                                            >
+                                                {{ plate.quantity }} order
+                                                available
+                                            </template>
+                                            <template v-else>
+                                                {{ plate.quantity }} orders
+                                                available
+                                            </template>
+                                        </span>
+                                    </div>
+                                </div>
                                 <p
                                     class="inline-flex text-sm font-semibold leading-5 text-gray-800 rounded-full"
                                 >
@@ -166,7 +185,7 @@
                 Este son tus platos adjuntados:
             </p>
             <ul role="list" class="divide-y divide-gray-200">
-                <li class="py-4 flex" v-for="order in orders" :key="order.id">
+                <li class="flex py-4" v-for="order in orders" :key="order.id">
                     <div class="ml-3">
                         <p class="text-sm font-medium text-gray-900">
                             {{ order.name }}
@@ -174,11 +193,11 @@
                     </div>
                 </li>
             </ul>
-            <p class="border-t border-gray-100 pt-2 flex justify-end">
+            <p class="flex justify-end pt-2 border-t border-gray-100">
                 Total: $ {{ totalOfOrders() }}
             </p>
 
-            <div class="bg-gray-50 p-4">
+            <div class="p-4 bg-gray-50">
                 <div class="mb-4">
                     <label
                         for="client_name"
@@ -191,8 +210,9 @@
                             type="text"
                             name="client_name"
                             id="client_name"
-                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             placeholder="Nombre"
+                            autocomplete="off"
                         />
                     </div>
                     <p
@@ -212,7 +232,7 @@
                         v-model="form.table_number"
                         id="table_number"
                         name="table_number"
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        class="block py-2 pr-10 pl-3 mt-1 w-full text-base rounded-md border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
                         <option
                             v-for="tableNumber in [1, 2, 3, 4, 5]"
@@ -228,11 +248,11 @@
             <button
                 @click="makeOrder"
                 type="button"
-                class="w-full justify-center inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="inline-flex justify-center items-center px-4 py-2 w-full font-medium text-white bg-indigo-600 rounded-md border border-transparent shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
                 Confirmar Pedido
                 <svg
-                    class="w-6 h-6 ml-2"
+                    class="ml-2 w-6 h-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -299,6 +319,22 @@ function decrementOrder(order) {
     }
 }
 
+function canIOrderMoreOrders(order) {
+    let plate = props.plates.data.find((plate) => plate.id === order.id);
+
+    return order.quantity < plate.quantity;
+}
+
+function incrementOrder(order) {
+    let plate = props.plates.data.find((plate) => plate.id === order.id);
+
+    if (plate.quantity <= order.quantity) {
+        return null;
+    }
+
+    order.quantity++;
+}
+
 function addOrder(plate) {
     if (orders.find((order) => order.id === plate.id)) {
         return;
@@ -319,20 +355,26 @@ let form = reactive({
 });
 
 function makeOrder() {
-    Inertia.post(route("order.store"), {
-        client_name: form.client_name,
-        table_number: form.table_number,
-        ordersId: orders.map(function (order) {
-            return {
-                'orderId': order.id,
-                'quantity': order.quantity,
-            };
-        }),
-    }, {
-        onSuccess: () => {
-            orders.splice(0, orders.length);
-            closeModal();
+    Inertia.post(
+        route("orders.store"),
+        {
+            client_name: form.client_name,
+            table_number: form.table_number,
+            ordersId: orders.map(function (order) {
+                return {
+                    orderId: order.id,
+                    quantity: order.quantity,
+                };
+            }),
         },
-    });
+        {
+            onSuccess: () => {
+                orders.splice(0, orders.length);
+                closeModal();
+                form.client_name = null;
+                form.table_number = 1;
+            },
+        }
+    );
 }
 </script>

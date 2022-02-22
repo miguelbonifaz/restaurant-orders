@@ -16,6 +16,7 @@ class MenuFactory extends Factory
             "name" => $this->faker->name,
             "description" => $this->faker->text,
             "price" => rand(10, 50) . '.' . collect([10, 15, 20, 25, 30, 35, 40, 45, 50])->random(),
+            'quantity' => rand(5, 12),
         ];
     }
 }
