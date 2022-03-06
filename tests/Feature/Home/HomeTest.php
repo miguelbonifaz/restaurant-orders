@@ -34,7 +34,7 @@ test("can see plate list", function () {
     );
 });
 
-test(" can't see any plate if there is no availability", function () {
+test("can't see any plate if there is no availability", function () {
     // Arrange
     $plate = Menu::factory()->create(["name" => "Pizza"]);
     Menu::factory()->create(['quantity' => 0]);

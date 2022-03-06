@@ -184,6 +184,53 @@
             <p class="text-lg font-bold text-gray-800">
                 Este son tus platos adjuntados:
             </p>
+            <div v-if="$page.props.flash.message_warning" class="alert">
+                <div>
+                    <div class="p-4 bg-yellow-100 rounded-md mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg
+                                    class="w-5 h-5 text-yellow-500"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M506.3 417l-213.3-364C284.8 39 270.4 32 256 32C241.6 32 227.2 39 218.1 53l-213.2 364C-10.59 444.9 9.851 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM52.58 432L255.1 84.8L459.4 432H52.58zM256 337.1c-17.36 0-31.44 14.08-31.44 31.44c0 17.36 14.11 31.44 31.48 31.44s31.4-14.08 31.4-31.44C287.4 351.2 273.4 337.1 256 337.1zM232 184v96C232 293.3 242.8 304 256 304s24-10.75 24-24v-96C280 170.8 269.3 160 256 160S232 170.8 232 184z"
+                                    />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p
+                                    class="text-sm font-medium leading-5 text-yellow-800"
+                                >
+                                    {{ $page.props.flash.message_warning }}
+                                </p>
+                            </div>
+                            <div class="pl-3 ml-auto">
+                                <div class="-mx-1.5 -my-1.5">
+                                    <button
+                                        @click="$page.props.flash.message_warning = null"
+                                        class="inline-flex rounded-md p-1.5 text-yellow-500 hover:bg-yellow-100 focus:outline-none focus:bg-yellow-100 transition ease-in-out duration-150"
+                                    >
+                                        <svg
+                                            class="w-5 h-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <ul role="list" class="divide-y divide-gray-200">
                 <li class="flex py-4" v-for="order in orders" :key="order.id">
                     <div class="ml-3">
@@ -279,6 +326,7 @@ import StackedList from "@/Pages/Shared/StackedList";
 import { computed, reactive, ref } from "vue";
 import FlashMessage from "@/Pages/Shared/FlashMessage";
 import { Inertia } from "@inertiajs/inertia";
+import { usePage } from '@inertiajs/inertia-vue3'
 
 const props = defineProps({
     plates: Object,
@@ -322,7 +370,7 @@ function decrementOrder(order) {
 function canIOrderMoreOrders(order) {
     let plate = props.plates.data.find((plate) => plate.id === order.id);
 
-    return order.quantity < plate.quantity;
+    return order.quantity < plate?.quantity;
 }
 
 function incrementOrder(order) {
@@ -369,6 +417,11 @@ function makeOrder() {
         },
         {
             onSuccess: () => {
+                if (!usePage().props.value.flash.message) {
+                    console.log()
+                    orders = reactive([])
+                    return
+                }
                 orders.splice(0, orders.length);
                 closeModal();
                 form.client_name = null;

@@ -31,6 +31,11 @@ class Menu extends Model implements HasMedia
             ->useDisk("food-plates");
     }
 
+    public function stillAvailable(): bool
+    {
+        return !($this->quantity === 0);
+    }
+
     public function photo(): ?\Spatie\MediaLibrary\MediaCollections\Models\Media
     {
         return $this->getFirstMedia("food-plates");

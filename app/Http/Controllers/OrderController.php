@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\UpdateOrdersEvent;
 use App\Http\Resources\OrderResource;
+use App\Models\Menu;
 use App\Models\MenuOrder;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
@@ -57,12 +58,30 @@ class OrderController extends Controller
             'status' => Order::STATUS_PENDING,
         ]);
 
+        $menuNotAvailable = collect();
+
         collect(request('ordersId'))
-            ->each(function ($data) use ($order) {
+            ->each(function ($data) use ($menuNotAvailable, $order) {
+                $menu = Menu::find($data['orderId']);
+                if (!$menu->stillAvailable()) {
+                    $menuNotAvailable->push($menu);
+                    return;
+                }
+
+                $menu->decrement('quantity', $data['quantity']);
                 $order->foods()->attach($data['orderId'], ['quantity' => $data['quantity']]);
             });
 
         UpdateOrdersEvent::dispatch();
+
+        if ($menuNotAvailable->isNotEmpty()) {
+            $order->foods()->detach();
+            $order->delete();
+
+            return redirect()
+                ->route('home.index')
+                ->with('message_warning', "El siguiente menú ya no se encuentra disponible: {$menuNotAvailable->implode('name', ', ')}");
+        }
 
         return redirect()
             ->route('home.index')
