@@ -1,0 +1,473 @@
+{
+  "ignition.healthCheck": {
+    "name": "ignition.healthCheck",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\HealthCheckController",
+    "uri": "_ignition/health-check",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "ignition.executeSolution": {
+    "name": "ignition.executeSolution",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\ExecuteSolutionController",
+    "uri": "_ignition/execute-solution",
+    "method": [
+      "POST"
+    ]
+  },
+  "ignition.shareReport": {
+    "name": "ignition.shareReport",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\ShareReportController",
+    "uri": "_ignition/share-report",
+    "method": [
+      "POST"
+    ]
+  },
+  "ignition.scripts": {
+    "name": "ignition.scripts",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\ScriptController",
+    "uri": "_ignition/scripts/{script}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "ignition.styles": {
+    "name": "ignition.styles",
+    "domain": null,
+    "action": "Facade\\Ignition\\Http\\Controllers\\StyleController",
+    "uri": "_ignition/styles/{style}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "cypress.factory": {
+    "name": "cypress.factory",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@factory",
+    "uri": "__cypress__/factory",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.login": {
+    "name": "cypress.login",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@login",
+    "uri": "__cypress__/login",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.logout": {
+    "name": "cypress.logout",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@logout",
+    "uri": "__cypress__/logout",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.artisan": {
+    "name": "cypress.artisan",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@artisan",
+    "uri": "__cypress__/artisan",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.run-php": {
+    "name": "cypress.run-php",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@runPhp",
+    "uri": "__cypress__/run-php",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.csrf-token": {
+    "name": "cypress.csrf-token",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@csrfToken",
+    "uri": "__cypress__/csrf_token",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "cypress.routes": {
+    "name": "cypress.routes",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@routes",
+    "uri": "__cypress__/routes",
+    "method": [
+      "POST"
+    ]
+  },
+  "horizon.stats.index": {
+    "name": "horizon.stats.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\DashboardStatsController@index",
+    "uri": "horizon/api/stats",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.workload.index": {
+    "name": "horizon.workload.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\WorkloadController@index",
+    "uri": "horizon/api/workload",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.masters.index": {
+    "name": "horizon.masters.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\MasterSupervisorController@index",
+    "uri": "horizon/api/masters",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.monitoring.index": {
+    "name": "horizon.monitoring.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\MonitoringController@index",
+    "uri": "horizon/api/monitoring",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.monitoring.store": {
+    "name": "horizon.monitoring.store",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\MonitoringController@store",
+    "uri": "horizon/api/monitoring",
+    "method": [
+      "POST"
+    ]
+  },
+  "horizon.monitoring-tag.paginate": {
+    "name": "horizon.monitoring-tag.paginate",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\MonitoringController@paginate",
+    "uri": "horizon/api/monitoring/{tag}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.monitoring-tag.destroy": {
+    "name": "horizon.monitoring-tag.destroy",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\MonitoringController@destroy",
+    "uri": "horizon/api/monitoring/{tag}",
+    "method": [
+      "DELETE"
+    ]
+  },
+  "horizon.jobs-metrics.index": {
+    "name": "horizon.jobs-metrics.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\JobMetricsController@index",
+    "uri": "horizon/api/metrics/jobs",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.jobs-metrics.show": {
+    "name": "horizon.jobs-metrics.show",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\JobMetricsController@show",
+    "uri": "horizon/api/metrics/jobs/{id}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.queues-metrics.index": {
+    "name": "horizon.queues-metrics.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\QueueMetricsController@index",
+    "uri": "horizon/api/metrics/queues",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.queues-metrics.show": {
+    "name": "horizon.queues-metrics.show",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\QueueMetricsController@show",
+    "uri": "horizon/api/metrics/queues/{id}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.jobs-batches.index": {
+    "name": "horizon.jobs-batches.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\BatchesController@index",
+    "uri": "horizon/api/batches",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.jobs-batches.show": {
+    "name": "horizon.jobs-batches.show",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\BatchesController@show",
+    "uri": "horizon/api/batches/{id}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.jobs-batches.retry": {
+    "name": "horizon.jobs-batches.retry",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\BatchesController@retry",
+    "uri": "horizon/api/batches/retry/{id}",
+    "method": [
+      "POST"
+    ]
+  },
+  "horizon.pending-jobs.index": {
+    "name": "horizon.pending-jobs.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\PendingJobsController@index",
+    "uri": "horizon/api/jobs/pending",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.completed-jobs.index": {
+    "name": "horizon.completed-jobs.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\CompletedJobsController@index",
+    "uri": "horizon/api/jobs/completed",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.failed-jobs.index": {
+    "name": "horizon.failed-jobs.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\FailedJobsController@index",
+    "uri": "horizon/api/jobs/failed",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.failed-jobs.show": {
+    "name": "horizon.failed-jobs.show",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\FailedJobsController@show",
+    "uri": "horizon/api/jobs/failed/{id}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.retry-jobs.show": {
+    "name": "horizon.retry-jobs.show",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\RetryController@store",
+    "uri": "horizon/api/jobs/retry/{id}",
+    "method": [
+      "POST"
+    ]
+  },
+  "horizon.jobs.show": {
+    "name": "horizon.jobs.show",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\JobsController@show",
+    "uri": "horizon/api/jobs/{id}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "horizon.index": {
+    "name": "horizon.index",
+    "domain": null,
+    "action": "Laravel\\Horizon\\Http\\Controllers\\HomeController@index",
+    "uri": "horizon/{view?}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "": {
+    "name": null,
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\ConfirmablePasswordController@store",
+    "uri": "confirm-password",
+    "method": [
+      "POST"
+    ]
+  },
+  "home.index": {
+    "name": "home.index",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\HomeController@__invoke",
+    "uri": "/",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "orders.store": {
+    "name": "orders.store",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\OrderController@store",
+    "uri": "orders",
+    "method": [
+      "POST"
+    ]
+  },
+  "orders.finalize": {
+    "name": "orders.finalize",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\FinalizeOrderController@__invoke",
+    "uri": "orders/{order}/finalize",
+    "method": [
+      "POST"
+    ]
+  },
+  "dashboard": {
+    "name": "dashboard",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\OrderController@index",
+    "uri": "dashboard",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "register": {
+    "name": "register",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\RegisteredUserController@create",
+    "uri": "register",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "login": {
+    "name": "login",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\AuthenticatedSessionController@create",
+    "uri": "login",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "password.request": {
+    "name": "password.request",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\PasswordResetLinkController@create",
+    "uri": "forgot-password",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "password.email": {
+    "name": "password.email",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\PasswordResetLinkController@store",
+    "uri": "forgot-password",
+    "method": [
+      "POST"
+    ]
+  },
+  "password.reset": {
+    "name": "password.reset",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\NewPasswordController@create",
+    "uri": "reset-password/{token}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "password.update": {
+    "name": "password.update",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\NewPasswordController@store",
+    "uri": "reset-password",
+    "method": [
+      "POST"
+    ]
+  },
+  "verification.notice": {
+    "name": "verification.notice",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\EmailVerificationPromptController@__invoke",
+    "uri": "verify-email",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "verification.verify": {
+    "name": "verification.verify",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\VerifyEmailController@__invoke",
+    "uri": "verify-email/{id}/{hash}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "verification.send": {
+    "name": "verification.send",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController@store",
+    "uri": "email/verification-notification",
+    "method": [
+      "POST"
+    ]
+  },
+  "password.confirm": {
+    "name": "password.confirm",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\ConfirmablePasswordController@show",
+    "uri": "confirm-password",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "logout": {
+    "name": "logout",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Auth\\AuthenticatedSessionController@destroy",
+    "uri": "logout",
+    "method": [
+      "POST"
+    ]
+  }
+}
