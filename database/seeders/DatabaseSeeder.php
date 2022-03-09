@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Events\UpdateOrdersEvent;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\User;
