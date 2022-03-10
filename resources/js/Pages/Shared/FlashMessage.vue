@@ -18,7 +18,7 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium leading-5 text-green-800">
+                            <p class="text-sm font-medium leading-5 text-green-800 flash_message">
                                 {{ $page.props.flash.message }}
                             </p>
                         </div>

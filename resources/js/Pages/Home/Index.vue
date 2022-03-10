@@ -149,7 +149,7 @@
                                 <button
                                     @click.prevent="addOrder(plate)"
                                     type="button"
-                                    class="flex inline-flex justify-center items-center w-11 h-11 text-base font-medium text-white text-gray-700 rounded-md rounded-full border-2 border-transparent"
+                                    class="flex inline-flex justify-center items-center w-11 h-11 text-base font-medium text-white text-gray-700 rounded-md rounded-full border-2 border-transparent addOrder"
                                     :class="{
                                         'bg-indigo-600 hover:bg-white hover:border-indigo-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500':
                                             !isOrdered(plate),
@@ -186,7 +186,7 @@
             </p>
             <div v-if="$page.props.flash.message_warning" class="alert">
                 <div>
-                    <div class="p-4 bg-yellow-100 rounded-md mb-6">
+                    <div class="p-4 mb-6 bg-yellow-100 rounded-md">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg
