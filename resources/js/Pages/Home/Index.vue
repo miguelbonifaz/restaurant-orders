@@ -79,6 +79,7 @@
                     <button
                         @click="isModalOpen = true"
                         type="button"
+                        dusk="verPedido"
                         class="inline-flex items-center px-4 py-2 font-medium text-white bg-indigo-600 rounded-lg border border-transparent shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Ver Pedido
@@ -149,6 +150,7 @@
                                 <button
                                     @click.prevent="addOrder(plate)"
                                     type="button"
+                                    :dusk="`addOrder(${plate.id})`"
                                     class="flex inline-flex justify-center items-center w-11 h-11 text-base font-medium text-white text-gray-700 rounded-md rounded-full border-2 border-transparent addOrder"
                                     :class="{
                                         'bg-indigo-600 hover:bg-white hover:border-indigo-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500':
@@ -295,6 +297,7 @@
             <button
                 @click="makeOrder"
                 type="button"
+                dusk="confirmarPedido"
                 class="inline-flex justify-center items-center px-4 py-2 w-full font-medium text-white bg-indigo-600 rounded-md border border-transparent shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
                 Confirmar Pedido
