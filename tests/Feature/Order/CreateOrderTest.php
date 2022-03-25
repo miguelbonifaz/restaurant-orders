@@ -73,11 +73,19 @@ test('cannot create a order if a menu it is not available', function () {
         'quantity' => 0,
     ]);
 
+    $plateTwo = Menu::factory()->create([
+        'quantity' => 2,
+    ]);
+
     // Act
     $response = createOrder([
         'ordersId' => [
             [
                 'orderId' => $plateOne->id,
+                'quantity' => 1,
+            ],
+            [
+                'orderId' => $plateTwo->id,
                 'quantity' => 1,
             ]
         ],
@@ -87,11 +95,14 @@ test('cannot create a order if a menu it is not available', function () {
 
     // Assert
     $response->assertRedirect(route('home.index'));
-    $response->assertSessionHas('message_warning', "El siguiente menú ya no se encuentra disponible: $plateOne->name");
+    $response->assertSessionHas('message_warning', "El siguiente menú ya no se encuentra disponible o no hay muchas unidades disponibles: $plateOne->name");
     $response->assertSessionMissing('message');
 
     $this->assertCount(0, Order::all());
     $this->assertCount(0, MenuOrder::all());
+
+    $this->assertEquals(0, $plateOne->fresh()->quantity);
+    $this->assertEquals(2, $plateTwo->fresh()->quantity);
 });
 
 test('fields are required', function () {

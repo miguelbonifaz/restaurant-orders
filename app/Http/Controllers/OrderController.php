@@ -63,8 +63,13 @@ class OrderController extends Controller
         collect(request('ordersId'))
             ->each(function ($data) use ($menuNotAvailable, $order) {
                 $menu = Menu::find($data['orderId']);
-                if (!$menu->stillAvailable()) {
+
+                if (!$menu->stillAvailable($data['quantity'])) {
                     $menuNotAvailable->push($menu);
+                    return;
+                }
+
+                if ($menuNotAvailable->isNotEmpty()) {
                     return;
                 }
 
@@ -80,7 +85,7 @@ class OrderController extends Controller
 
             return redirect()
                 ->route('home.index')
-                ->with('message_warning', "El siguiente menú ya no se encuentra disponible: {$menuNotAvailable->implode('name', ', ')}");
+                ->with('message_warning', "El siguiente menú ya no se encuentra disponible o no hay muchas unidades disponibles: {$menuNotAvailable->implode('name', ', ')}");
         }
 
         return redirect()

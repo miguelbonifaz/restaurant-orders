@@ -236,7 +236,7 @@
             <ul role="list" class="divide-y divide-gray-200">
                 <li class="flex py-4" v-for="order in orders" :key="order.id">
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">
+                        <p :dusk="`order-list-${order.id}`" :class="`text-sm font-medium text-gray-900 order-list-${order.id}`">
                             {{ order.name }}
                         </p>
                     </div>
@@ -421,11 +421,11 @@ function makeOrder() {
         {
             onSuccess: () => {
                 if (!usePage().props.value.flash.message) {
-                    console.log()
-                    orders = reactive([])
+
+                    orders.splice(0)
                     return
                 }
-                orders.splice(0, orders.length);
+                orders.splice(0);
                 closeModal();
                 form.client_name = null;
                 form.table_number = 1;

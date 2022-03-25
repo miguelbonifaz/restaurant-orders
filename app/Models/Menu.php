@@ -31,9 +31,9 @@ class Menu extends Model implements HasMedia
             ->useDisk("food-plates");
     }
 
-    public function stillAvailable(): bool
+    public function stillAvailable($quantity): bool
     {
-        return !($this->quantity === 0);
+        return $this->quantity >= $quantity;
     }
 
     public function photo(): ?\Spatie\MediaLibrary\MediaCollections\Models\Media
